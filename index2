@@ -1,0 +1,313 @@
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Account Recovery</title>
+<script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://www.google.com/search?q=https://fonts.googleapis.com">
+<link rel="preconnect" href="https://www.google.com/search?q=https://fonts.gstatic.com" crossorigin>
+<link href="https://www.google.com/search?q=https://fonts.googleapis.com/css2%3Ffamily%3DInter:wght%40400%3B500%3B600%3B700%26display%3Dswap" rel="stylesheet">
+<style>
+body {
+font-family: 'Inter', sans-serif;
+-webkit-tap-highlight-color: transparent;
+}
+.screen {
+display: none;
+}
+.screen.active {
+display: flex;
+}
+.animate-fade-in {
+animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+.animate-slide-up {
+animation: slideUp 0.5s ease-in-out;
+}
+@keyframes slideUp {
+from { transform: translateY(20px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+.gemini-output {
+white-space: pre-wrap;
+line-height: 1.6;
+}
+.gemini-output strong {
+color: #a78bfa; /* Light purple */
+}
+</style>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+<!-- Mobile App Frame -->
+<div class="w-full max-w-sm h-[80vh] md:h-[90vh] bg-gray-800 rounded-3xl shadow-2xl overflow-hidden relative border-4 border-gray-700">
+    <div id="app-content" class="h-full overflow-y-auto bg-gray-900 text-white">
+
+        <!-- Screen: Splash -->
+        <div id="splash-screen" class="screen active flex-col h-full w-full items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-700 animate-fade-in">
+            <svg class="w-20 h-20 mb-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <h1 class="text-2xl font-bold">Social Account Recovery</h1>
+            <p class="mt-2 text-lg font-light">Don't worry, we are with you</p>
+        </div>
+
+        <!-- Screen: Auth (Login/Signup) -->
+        <div id="auth-screen" class="screen flex-col h-full w-full items-center justify-center p-6 animate-fade-in">
+            <div id="auth-container" class="w-full">
+                <!-- Login Form -->
+                <div id="login-form">
+                    <h2 class="text-3xl font-bold text-center mb-2">Welcome Back!</h2>
+                    <p class="text-center text-gray-400 mb-8">Login to continue</p>
+                    <div class="space-y-4">
+                        <input id="login-phone" type="tel" placeholder="Phone Number" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <input id="login-password" type="password" placeholder="Password" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <button onclick="handleLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 rounded-lg p-3 mt-8 font-semibold transition-colors">Login</button>
+                    <p class="text-center text-sm text-gray-400 mt-4">
+                        <a href="#" class="text-indigo-400 hover:underline">Forgot Password?</a>
+                    </p>
+                    <p class="text-center text-gray-400 mt-6">
+                        Don't have an account? <a href="#" onclick="toggleAuthForm()" class="font-semibold text-indigo-400 hover:underline">Sign Up</a>
+                    </p>
+                </div>
+                <!-- Signup Form -->
+                <div id="signup-form" style="display: none;">
+                    <h2 class="text-3xl font-bold text-center mb-2">Create Account</h2>
+                    <p class="text-center text-gray-400 mb-8">Let's get you started</p>
+                    <div class="space-y-4">
+                        <input id="signup-phone" type="tel" placeholder="Phone Number" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <input id="signup-password" type="password" placeholder="Password" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <button onclick="handleSignup()" class="w-full bg-indigo-600 hover:bg-indigo-700 rounded-lg p-3 mt-8 font-semibold transition-colors">Sign Up</button>
+                     <p class="text-center text-gray-400 mt-6">
+                        Already have an account? <a href="#" onclick="toggleAuthForm()" class="font-semibold text-indigo-400 hover:underline">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Subscription -->
+        <div id="subscription-screen" class="screen flex-col h-full w-full items-center justify-center p-6 text-center animate-slide-up">
+            <svg class="w-16 h-16 text-yellow-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            <h2 class="text-3xl font-bold mb-2">Get Premium Access</h2>
+            <p class="text-gray-400 mb-8">Unlock all features with our flexible subscription plan.</p>
+
+            <div class="bg-gray-800 border-2 border-indigo-500 rounded-xl p-6 w-full mb-4">
+                <h3 class="text-xl font-semibold text-indigo-400">Introductory Offer</h3>
+                <p class="text-4xl font-bold my-2">₹100</p>
+                <p class="text-lg font-normal text-gray-300">For First 2 Weeks</p>
+            </div>
+
+            <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 w-full">
+                <h3 class="text-xl font-semibold">Automatic Renewal</h3>
+                <p class="text-4xl font-bold my-2">₹50 <span class="text-lg font-normal text-gray-400">/ week</span></p>
+                <p class="text-sm font-normal text-gray-400">(After introductory period)</p>
+            </div>
+
+            <button onclick="handleSubscription()" class="w-full bg-indigo-600 hover:bg-indigo-700 rounded-lg p-3 mt-8 font-semibold transition-colors">Start with ₹100 Plan</button>
+        </div>
+
+        <!-- Screen: Terms & Conditions -->
+        <div id="terms-screen" class="screen flex-col h-full w-full p-6 animate-slide-up">
+             <h2 class="text-2xl font-bold mb-4 text-center">Terms and Conditions</h2>
+             <div class="flex-grow bg-gray-800 border border-gray-700 rounded-lg p-4 overflow-y-auto text-sm text-gray-300 space-y-2">
+                <p>Welcome to Social Account Recovery. By using our app, you agree to these terms.</p>
+                <p>1. This app provides official links and guidance for account recovery. We are not affiliated with Google, Meta, or Snap Inc.</p>
+                <p><strong>2. Subscription Plan:</strong> The subscription begins with a special introductory offer of <strong>₹100 for the first 14 days</strong> of access. After this initial period, a recurring fee of <strong>₹50 per week</strong> will be automatically charged to maintain access to premium features.</p>
+                <p>3. We do not store your passwords or personal data from your social accounts. Your privacy is important to us.</p>
+                <p>4. The app's purpose is to help, but we cannot guarantee account recovery as it depends on the policies of the respective social media platforms.</p>
+                <p>5. The AI features provide suggestions and drafts. You are responsible for the final content and actions you take.</p>
+                <p>6. Misuse of this app or its resources can lead to a ban without a refund.</p>
+                <p>By clicking 'Accept', you acknowledge and agree to these terms.</p>
+             </div>
+             <button onclick="showScreen('home-screen')" class="w-full bg-indigo-600 hover:bg-indigo-700 rounded-lg p-3 mt-6 font-semibold transition-colors">Accept and Continue</button>
+        </div>
+
+        <!-- Screen: Home -->
+        <div id="home-screen" class="screen flex-col h-full w-full animate-fade-in">
+            <header class="flex items-center justify-between p-4 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700">
+                <button onclick="showScreen('profile-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold">Recovery Center</h1>
+                <button onclick="showScreen('support-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+            </header>
+            <main class="flex-grow p-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div onclick="openRecoveryOptions('Gmail')" class="bg-gray-800 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square cursor-pointer hover:bg-gray-700 transition-colors">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" class="w-16 h-16" alt="Gmail Icon" onerror="this.onerror=null; this.src='https://placehold.co/64x64/2d3748/ffffff?text=G'">
+                        <p class="mt-3 font-semibold text-lg">Gmail</p>
+                    </div>
+                     <div onclick="openRecoveryOptions('Facebook')" class="bg-gray-800 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square cursor-pointer hover:bg-gray-700 transition-colors">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" class="w-16 h-16" alt="Facebook Icon" onerror="this.onerror=null; this.src='https://placehold.co/64x64/2d3748/ffffff?text=F'">
+                        <p class="mt-3 font-semibold text-lg">Facebook</p>
+                    </div>
+                     <div onclick="openRecoveryOptions('Instagram')" class="bg-gray-800 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square cursor-pointer hover:bg-gray-700 transition-colors">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="w-16 h-16" alt="Instagram Icon" onerror="this.onerror=null; this.src='https://placehold.co/64x64/2d3748/ffffff?text=I'">
+                        <p class="mt-3 font-semibold text-lg">Instagram</p>
+                    </div>
+                     <div onclick="openRecoveryOptions('Snapchat')" class="bg-gray-800 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square cursor-pointer hover:bg-gray-700 transition-colors">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg" class="w-16 h-16" alt="Snapchat Icon" onerror="this.onerror=null; this.src='https://placehold.co/64x64/2d3748/ffffff?text=S'">
+                        <p class="mt-3 font-semibold text-lg">Snapchat</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Screen: Recovery Options -->
+        <div id="recovery-screen" class="screen flex-col h-full w-full animate-fade-in">
+            <header class="flex items-center p-4 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700">
+                <button onclick="showScreen('home-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h1 id="recovery-title" class="text-xl font-bold mx-auto">Recovery Options</h1>
+            </header>
+            <main id="recovery-main" class="flex-grow p-4 space-y-3 overflow-y-auto">
+                <!-- AI Guide section -->
+                <div id="ai-guide-container" class="mb-4">
+                    <button id="generate-ai-guide-btn" class="w-full bg-purple-600 hover:bg-purple-700 rounded-lg p-3 font-semibold transition-colors flex items-center justify-center space-x-2">
+                       <span>✨ AI se Salah Le</span>
+                    </button>
+                    <div id="ai-guide-output" class="hidden mt-3 bg-gray-800 border border-gray-700 rounded-lg p-4 text-sm gemini-output"></div>
+                </div>
+                <!-- Official links section -->
+                <h3 class="text-lg font-semibold text-gray-300 border-b border-gray-700 pb-2">Official Links</h3>
+                <div id="recovery-options-list" class="pt-2 space-y-3">
+                    <!-- Options will be injected here by JS -->
+                </div>
+            </main>
+        </div>
+
+         <!-- Screen: Profile -->
+        <div id="profile-screen" class="screen flex-col h-full w-full animate-fade-in">
+            <header class="flex items-center p-4 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700">
+                <button onclick="showScreen('home-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold mx-auto">Profile</h1>
+            </header>
+            <main class="flex-grow p-6 flex flex-col items-center">
+                <div class="w-24 h-24 rounded-full bg-indigo-500 flex items-center justify-center text-4xl font-bold mb-4">
+                    <span id="profile-initial">U</span>
+                </div>
+                <p class="text-xl font-semibold">User Phone:</p>
+                <p id="profile-phone" class="text-lg text-gray-300 mb-6">N/A</p>
+                <p class="text-xl font-semibold">Subscription:</p>
+                <p id="profile-subscription-status" class="text-lg font-bold mb-8">Loading...</p>
+
+                <button onclick="showScreen('ai-security-checkup-screen')" class="w-full max-w-xs bg-purple-600 hover:bg-purple-700 rounded-lg p-3 mb-4 font-semibold transition-colors flex items-center justify-center space-x-2">
+                    <span>✨ Start AI Security Checkup</span>
+                </button>
+
+                <p class="text-sm text-gray-500 text-center px-4">For security, your account is locked to this device. To use on a new device, please contact support.</p>
+                 <button onclick="handleLogout()" class="w-full max-w-xs bg-red-600 hover:bg-red-700 rounded-lg p-3 mt-auto font-semibold transition-colors">Logout</button>
+            </main>
+        </div>
+
+         <!-- Screen: Support -->
+        <div id="support-screen" class="screen flex-col h-full w-full animate-fade-in">
+            <header class="flex items-center p-4 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700">
+                <button onclick="showScreen('home-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold mx-auto">Support & Contact</h1>
+            </header>
+            <main class="flex-grow p-6 space-y-4">
+                <button onclick="showScreen('ai-phishing-analyzer-screen')" class="w-full bg-teal-600 hover:bg-teal-700 rounded-lg p-3 font-semibold transition-colors flex items-center justify-center space-x-2">
+                    <span>✨ AI se Message Check Karaye</span>
+                </button>
+                <button onclick="showScreen('ai-email-screen')" class="w-full bg-purple-600 hover:bg-purple-700 rounded-lg p-3 font-semibold transition-colors flex items-center justify-center space-x-2">
+                    <span>✨ AI se Support Email Likhwaye</span>
+                </button>
+                <div>
+                    <h3 class="text-lg font-semibold text-indigo-400 mb-2">Contact Us</h3>
+                    <p class="text-gray-300">For any queries, issues, or feedback, please reach out to us:</p>
+                    <p class="mt-2"><strong>Email:</strong> <a href="mailto:support@socialrecovery.app" class="text-blue-400 hover:underline">support@socialrecovery.app</a></p>
+                    <p class="mt-1"><strong>Whatsapp:</strong> <a href="https://wa.me/910000000000" target="_blank" class="text-blue-400 hover:underline">+91 00000 00000</a></p>
+                </div>
+                 <div>
+                    <h3 class="text-lg font-semibold text-indigo-400 mb-2">Frequently Asked Questions</h3>
+                    <div class="space-y-2">
+                        <p><strong>Q: Is this app safe?</strong><br>A: Yes, we only redirect you to official websites. We never ask for your passwords.</p>
+                        <p><strong>Q: Can I get a refund?</strong><br>A: Due to the digital nature of our service, we do not offer refunds. Please read the T&C carefully.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Screen: AI Email Generator -->
+        <div id="ai-email-screen" class="screen flex-col h-full w-full animate-fade-in">
+            <header class="flex items-center p-4 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700">
+                <button onclick="showScreen('support-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold mx-auto">✨ AI Email Assistant</h1>
+            </header>
+            <main class="flex-grow p-4 flex flex-col space-y-4">
+                <p class="text-sm text-gray-400">Aapki kya problem hai? Yahan short me likhein aur AI aapke liye ek professional email taiyar kar dega.</p>
+                <textarea id="email-problem-input" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" placeholder="Jaise: Mera Facebook account hack ho gaya hai aur main login nahi kar paa raha."></textarea>
+                <button onclick="generateSupportEmail()" id="generate-email-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 rounded-lg p-3 font-semibold transition-colors">Generate Email</button>
+                <div id="email-output-container" class="hidden flex-grow flex-col">
+                    <textarea id="email-output" rows="10" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-sm flex-grow" readonly></textarea>
+                    <button onclick="copyToClipboard('email-output')" class="bg-gray-700 hover:bg-gray-600 rounded-lg p-2 mt-2 font-semibold">Copy Text</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Screen: AI Security Checkup -->
+        <div id="ai-security-checkup-screen" class="screen flex-col h-full w-full animate-fade-in">
+            <header class="flex items-center p-4 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700">
+                <button onclick="showScreen('profile-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold mx-auto">✨ AI Security Checkup</h1>
+            </header>
+            <main class="flex-grow p-4 flex flex-col space-y-4">
+                <p class="text-sm text-gray-300 text-center">Apne social media accounts ko surakshit rakhne ke liye AI se behtareen security tips prapt karein.</p>
+                <button onclick="runSecurityCheckup()" id="run-security-checkup-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 rounded-lg p-3 font-semibold transition-colors">Start Checkup</button>
+                <div id="security-checkup-output" class="hidden flex-grow overflow-y-auto bg-gray-800 border border-gray-700 rounded-lg p-4 text-sm gemini-output">
+                </div>
+            </main>
+        </div>
+
+        <!-- Screen: AI Phishing Analyzer -->
+        <div id="ai-phishing-analyzer-screen" class="screen flex-col h-full w-full animate-fade-in">
+            <header class="flex items-center p-4 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700">
+                <button onclick="showScreen('support-screen')" class="p-2 rounded-full hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <h1 class="text-xl font-bold mx-auto">✨ AI Phishing Analyzer</h1>
+            </header>
+            <main class="flex-grow p-4 flex flex-col space-y-4">
+                <p class="text-sm text-gray-400">Kya aapko koi suspicious SMS ya email mila hai? Use yahan paste karein aur AI se check karayein ki woh asli hai ya nakli.</p>
+                <textarea id="phishing-input" rows="6" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" placeholder="Suspicious message yahan paste karein..."></textarea>
+                <button onclick="analyzePhishingMessage()" id="analyze-message-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 rounded-lg p-3 font-semibold transition-colors">Analyze Message</button>
+                <div id="phishing-output" class="hidden flex-grow overflow-y-auto bg-gray-800 border border-gray-700 rounded-lg p-4 text-sm gemini-output">
+                </div>
+            </main>
+        </div>
+
+
+        <!-- Global Message/Alert Box -->
+        <div id="message-box" class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 bg-red-500 text-white px-6 py-2 rounded-lg shadow-lg text-sm z-50">
+            <p id="message-text"></p>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="hidden absolute inset-0 bg-gray-900 bg-opacity-75 flex-col items-center justify-center z-40">
+            <svg class="animate-spin h-10 w-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="mt-4 text-lg">AI is working...</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
